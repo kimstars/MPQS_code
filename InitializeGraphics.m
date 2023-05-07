@@ -1,4 +1,4 @@
-function [v_Image,v_Alpha,fHandler]=InitializeGraphics()
+function [fHandler]=InitializeGraphics()
 global EnvironmentWidth;
 global ImageWidth;
 global BoidsNum;
@@ -9,7 +9,7 @@ global Reds RedsNum MaxRedNum RedsHP DieRNum;
 global Blues BluesNum MaxBlueNum BluesHP DieBNum;
 [v_ImageBF, v_AlphaBF]	= LoadImageBase('baseko2000.png' , 2000, 2000, 0);
 
-[v_Image, v_Alpha]	=      LoadImageBase('oto.png' , 80, 80, 0);
+%[v_Image, v_Alpha]	=      LoadImageBase('oto.png' , 80, 80, 0);
 fHandler = figure;
 fHandler.Color = 'white';
 fHandler.MenuBar =  'none'
