@@ -277,15 +277,12 @@ function action()
             CurrentBlue = Boids(i, :);
 
             arr_force = steer_arrival(CurrentBlue, TargetBoid1);
-            
-            
+
             Boids(i, :) = applyForce(CurrentBlue, arr_force);
 
         end
 
         Leader = Boids(2, :);
-       
-        
 
         % di chuyen cac quan con lai theo leader
         for RedIndex = 1:RedsNum
@@ -293,7 +290,7 @@ function action()
             CurrentRed = Reds(RedIndex, :);
             force_leader_following = steer_leader_following(CurrentRed, Leader, FleeDistance, D_BehindLeader);
             flk_force = steer_flock(CurrentRed, Reds, RedsNum);
-            force = force_leader_following  + flk_force *2 ;
+            force = force_leader_following + flk_force * 2;
             Reds(RedIndex, :) = applyForce(CurrentRed, force);
 
         end
@@ -304,9 +301,48 @@ function action()
         RedrawGraphics(Boids, BoidsNum, v_ImageXT, v_AlphaXT, BoidsPlot);
         RedrawBoidsHP();
         TimeStick1 = TimeStick1 + 1;
-    end
 
-    
+        if (pdist2(Boids(1, :), b41) < 500)
+
+            while (Boids(1, 15) > 0)
+                %neu khong co vong lap while nay thi thanh mau e giam bot, nhung
+                %nhu the khong tieu diet hoan toan duoc
+                c2 = line([b41(1), Boids(1, 1)], [b41(2), Boids(1, 2)], 'Color', 'blue', 'LineStyle', '-.');
+                Boids(1, 15) = Boids(1, 15) - 200;
+                pause(0.05);
+                % x?a duong ??n c?
+                delete(c2);
+
+                if (Boids(1, 15) > 0)
+                    pause(0.5)
+                end
+
+            end
+
+        end
+
+        deviationXB = ShootDistanceB * (1 - AccuracyB * (2 * rand - 1));
+        deviationYB = ShootDistanceB * (1 - AccuracyB * (2 * rand - 1));
+
+        [J, tmpDist] = findTarget(Boids(1, :), BluesNum, Blues);
+        AttackBlue = zeros(1, BluesNum);
+        
+        if (J > 0 && dist(Boids(1, :), Blues(J, :)) < 520)
+
+            c1 = line([Boids(1, 1), Blues(J, 1)], [Boids(1, 2), Blues(J, 2)], 'Color', 'red', 'LineStyle', '-.');
+            pause(0.02);
+            % xóa duong ??n c?
+            delete(c1);
+
+            if (sqrt(deviationXB * deviationXB + deviationYB * deviationYB) < 800)
+                AttackBlue(1, J) = AttackBlue(1, J) + DameOfBlue;
+            end
+
+            RedrawBoids(Blues, BluesNum, v_ImageB, v_AlphaB, BluesPlot)
+            RedrawBlueHP()
+        end
+
+    end
 
     %% daviation Bule // gi? tr? ?? l?hch trong vi?c t?nh to?n ???ng b?n c?a c?c ??i t??ng
     deviationXB = ShootDistanceB * (1 - AccuracyB * (2 * rand - 1));
@@ -388,6 +424,7 @@ function action()
     %             end
     %        end
     %        check = check + 1;
+
     %             CurrentBoid = Boids(1,:);
     %             forceBoid1 = steer_seek(CurrentBoid, b41(1,1:3));
     %             Boids(1,:) = applyForce(CurrentBoid, 3*forceBoid1);
