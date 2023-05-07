@@ -9,8 +9,8 @@ global EnvironmentWidth ImageWidth SafeDistance AlignmentRange CohesionRange...
     AccuracyB AccuracyR;
 
 %% Accuracy
-AccuracyB =0.95; % do chinh xac
-AccuracyR =0.9;
+AccuracyB =0.9; % do chinh xac
+AccuracyR =0.99;
 %% change global variables here (use user input or something)
 EnvironmentWidth = 1000;
 ImageWidth = EnvironmentWidth/10;
@@ -32,7 +32,7 @@ DameOfBlue = 5;
 DameOfRed=5;
 MaxBlueNum = 20;
 ShootDistanceB = 200; 
-ShootDistanceR = 200; 
+ShootDistanceR = 300; 
 Target1 = [-400 -400 0];
 Target2 = [100 100 0];
 SizeHPBar=1;
