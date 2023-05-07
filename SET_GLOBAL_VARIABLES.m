@@ -56,8 +56,8 @@ Reds = zeros(MaxRedNum,15); % initialize boids matrix
 %{1-3 position, 4-6 velocity, 7-9 accelaration, 10 maxspeed, 11 maxforce, 12 angle,
 % 13 max see ahead (for collision avoidance), 14 max avoid force (collision avoidance)
 %}
-Reds(:,1) = EnvironmentWidth/4*(rand([MaxRedNum,1]))+200; % set random position
-Reds(:,2) = EnvironmentWidth/4*(rand([MaxRedNum,1]))+200; % set random position
+Reds(:,1) = -850; % set random position
+Reds(:,2) = -800; % set random position
 %Reds(:,1:2) = 2; % set random position EnvironmentWidth*(2*rand([RedsNum,2])-1)
 Reds(:,4:5) = 200; %200*(2*rand([BoidsNum,2])-1); % set random velocity
 Reds(:,10) = 4;%*(rand([BoidsNum,1]) + 0.2); % set maxspeed
