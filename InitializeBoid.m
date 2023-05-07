@@ -10,8 +10,8 @@ for i=1:OBJNum
             img_i = imrotate(v_Image, angle);
             alpha_i = imrotate(v_Alpha, angle); 
         else
-        img_i = imrotate(v_ImageE, angle);
-        alpha_i = imrotate(v_AlphaE, angle);                
+            img_i = imrotate(v_ImageE, angle);
+            alpha_i = imrotate(v_AlphaE, angle);                
         end  
     BoilsPlot(i) = image(OBJs(i, 1), OBJs(i, 2) , img_i);
     BoilsPlot(i).AlphaData = alpha_i; 
