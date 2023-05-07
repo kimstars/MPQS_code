@@ -20,7 +20,20 @@ global ObstaclesB ;
 global  DieRNum DieBNum;
 global MaxRedNum;
 global endCombat;
-global conlai;
+
+
+ObstaclesNum=15;
+Obstacles(1,1:3) = [-800 -780 0 ];
+Obstacles(2,1:3)=[-820 -780 0];
+Obstacles(3, 1:3)=[-620, - 780,0];
+%test
+  global FleeDistance;
+   global D_BehindLeader;
+    FleeDistance = 10;
+    D_BehindLeader = 130;
+    % SafeDistance = 30; % kho?ng cách t?i thi?u gi?a các Red
+
+
 BoidsNum = 2; % Choose number of Boids to demo
 Boids(1,10) = 1; % set max speed of 1-st Boid
 Boids(2:BoidsNum, 10) = 1;
@@ -36,7 +49,7 @@ titleStr = [titleStr newline '(Mo cua danh chiem dau cau)'];
 title(titleStr);
 set(fHandler, 'WindowButtonDownFcn',@cursorClickCallback);
 % tai hinh
-[v_ImageFallTree, v_AlphaFallTree] =   LoadImageBase('tree.png', 150, 80, 0);
+[~, v_AlphaFallTree] =   LoadImageBase('tree.png', 150, 80, 0);
 [v_ImageB, v_AlphaB]	=      LoadImageBase('SoldierB.png' , 60, 60, 0);
 [v_ImageE , v_AlphaE]	=      LoadImageBase('rip.png' , 60, 60, 0);
 [v_ImageVic, v_AlphaVic]	=      LoadImageBase('victory.png' , 300, 300, 0);
@@ -95,6 +108,7 @@ nup2 = [70 310 0];
 nup3 = [400 400 0];
 nup4 = [330 150 0];
 nup5 = [380 100 0];
+
 TimeStick1 = 1;
 while(TimeStick1 < 200)
     for ItemBlue = 1:BluesNum
@@ -125,6 +139,9 @@ end
 nupR1 = [-80 -210 0];
 nupR2 = [-300 80 0];
 nupR = [-870 -550 0];
+nupR3 = [0,-800, 0];
+nupR4= [-390,-100,0];
+
 %len goc cay
 TimeStick2 = 1;
 while(TimeStick2 < 120)
@@ -231,17 +248,6 @@ pause(4);
 delete(Fence1Plot);
 delete(Fence2Plot);
 delete(BMBPlot);
-%% ve xe tang
-%Boids o day la xe (3 xe)
-Boids(:,10) = 1;
-Boids(1,1:3) = [-600 -500 0];
-Boids(2,1:3) = [-800 -600 0];
-
-Boids(1,:) = applyForce(Boids(1,:), 0);
-Boids(1:BoidsNum, 15) = 1000;
-AliveXT = ones(1,2);
-[BoidsPlot]=InitializeBoid(v_ImageXT,v_AlphaXT,v_ImageE,v_AlphaE,BoidsNum,Boids);
-[BoidsHP]=InitializaHPBoids(BoidsNum,MaxBlueNum,Boids);
 %% Ve b41, ve dich xuat hien
 b41(1,1:3) = [220 410 0];
  [v_Image41, v_Alpha41]	=      LoadImageBase('SoldierB_b41.png' , 100, 100, 0);
@@ -249,8 +255,47 @@ b41(1,1:3) = [220 410 0];
  b41(1,15)=1000;
 
 b41Plot=InitializeBoid(v_Image41,v_Alpha41,v_ImageE,v_AlphaE,1,b41);
-[b41HP]=InitializaHPBoids(BoidsNum,MaxBlueNum,Boids);
- %% daviation Bule // giá tr? ?? lêhch trong vi?c tính toán ???ng b?n c?a các ??i t??ng
+[b41HP]=InitializeHP(BoidsNum,MaxBlueNum,Boids);
+% %% test ?i theo lên ??n b41
+% timeStick7=1;
+% while(timeStick7<500)
+%     % Ve leader di len den vi tri cua b52
+%             Leader = Reds(4, :);
+%             % Steering force
+%             force_arrival = steer_arrival(Leader, Boids(2,1:3)); 
+%             Reds(4,:) = applyForce(Leader, 2*force_arrival);
+%             RedrawGraphics(Reds, RedsNum, v_ImageR, v_AlphaR, RedsPlot);
+%             RedrawRedHP();
+%        % di chuyen cac quan con lai theo leader
+%        for  RedIndex= 5:RedsNum
+%             Reds = updateAtBoundary(Reds,RedIndex);
+%             CurrentRed = Reds(RedIndex, :);
+%             force_leader_following = steer_leader_following(CurrentRed, Leader, FleeDistance, D_BehindLeader);
+%             %force_separation = steer_separation(Reds);
+%             % Total force
+%             %force = force_leader_following + force_separation;
+%             % Update velocity and position
+%             Reds(RedIndex,:) = applyForce(CurrentRed, force_leader_following);
+% 
+%        end
+%        RedrawGraphics(Reds,RedsNum,v_ImageR,v_AlphaR,RedsPlot);
+%        timeStick7 = timeStick7+1;
+% end
+
+%% ve xe tang
+%Boids o day la xe (3 xe)
+Boids(:,10) = 1;
+Boids(1,1:3) = [-600 -500 0];
+Boids(2,1:3) = [-800 -600 0];
+Boids(1,:) = applyForce(Boids(1,:), 0);
+Boids(1:BoidsNum, 15) = 1000;
+
+
+[BoidsPlot]=InitializeBoid(v_ImageXT,v_AlphaXT,v_ImageE,v_AlphaE,BoidsNum,Boids);
+[BoidsHP]=InitializaHPBoids(BoidsNum,2,Boids);
+
+
+ %% daviation Bule // gi? tr? ?? l?hch trong vi?c t?nh to?n ???ng b?n c?a c?c ??i t??ng
     deviationXB = ShootDistanceB*(1-AccuracyB*(2*rand - 1));
     deviationYB = ShootDistanceB*(1-AccuracyB*(2*rand - 1));
     
@@ -261,40 +306,128 @@ b41Plot=InitializeBoid(v_Image41,v_Alpha41,v_ImageE,v_AlphaE,1,b41);
 pause(1)
 %% Tan cong xe tang
 % tim xe tang gan nhat de ban
-
+check=1;
 TimeStick6 = 1;
-while(TimeStick6 < 200)
+while(TimeStick6 < 400)
     [y, Fs] = audioread('Tieng_o_to.wav');
     sound(y, Fs);
-    while(AliveXT(1,1)>0)
-        CurrentBoid = Boids(1,:);
-        forceBoid1 = steer_seek(CurrentBoid, b41(1,1:3));
-        Boids(1,:) = applyForce(CurrentBoid, forceBoid1);
-        forceBoid2 = steer_seek(Boids(2,:), Boids(1,:));
-        Boids(2,:) = applyForce(Boids(2,:), forceBoid2);
-        RedrawBoids(Boids, 2, v_ImageXT, v_AlphaXT, BoidsPlot);
-        RedrawBoidsHP();
+    while(Boids(1,15)>0)
+        TimeStick2 = 1;
+        if (check<120)
+            while(TimeStick2 < 120)
+                for ItemRed = 4:15
+                    Reds = updateAtBoundary(Reds, ItemRed);
+                    CurrentRed = Reds(ItemRed, :);
+                    if (ItemRed <= 9)
+                        forceItem = steer_seek(CurrentRed, nupR);
+                        force_separation = steer_separation(CurrentRed);
+                    end
+                    if (ItemRed >9 )
+                        forceItem = steer_seek(CurrentRed, nupR3);
+                        force_separation = steer_separation(CurrentRed);
+                    end
+                    force = force_separation*1.5 +forceItem;
+                    Reds(ItemRed,:) = applyForce(CurrentRed, force);
+                end
+                RedrawGraphics(Reds, RedsNum, v_ImageR, v_AlphaR, RedsPlot);
+                RedrawRedHP();
+                 CurrentBoid = Boids(1,:);
+                forceBoid1 = steer_seek(CurrentBoid, b41(1,1:3));
+                Boids(1,:) = applyForce(CurrentBoid, 3*forceBoid1);
+                forceBoid2 = steer_seek(Boids(2,:), Boids(1,:));
+                Boids(2,:) = applyForce(Boids(2,:), 3*forceBoid2);
+
+                RedrawBoids(Boids, 2, v_ImageXT, v_AlphaXT, BoidsPlot);
+                RedrawBoidsHP();
+                    TimeStick2 = TimeStick2 + 1;
+                    check = check + 1;
+            end
+        end
+        %len vi tri 2 cuc da 2 ben
+       if (check==120)
+            while(TimeStick2 < 500)
+                for ItemRed = 4:15
+                    Reds = updateAtBoundary(Reds, ItemRed);
+                    CurrentRed = Reds(ItemRed, :);
+                    if (ItemRed <= 9)
+                        forceItem = steer_seek(CurrentRed, nupR4);
+                        force_separation = steer_separation(CurrentRed);
+                    end
+                    if (ItemRed >9 )
+                        forceItem = steer_seek(CurrentRed, nupR1);
+                        force_separation = steer_separation(CurrentRed);
+                    end
+                     force = force_separation*1.5 +forceItem;
+                     Reds(ItemRed,:) = applyForce(CurrentRed, force );
+                end
+                RedrawGraphics(Reds, RedsNum, v_ImageR, v_AlphaR, RedsPlot);
+                RedrawRedHP();
+                 CurrentBoid = Boids(1,:);
+                forceBoid1 = steer_seek(CurrentBoid, b41(1,1:3));
+                Boids(1,:) = applyForce(CurrentBoid, 3*forceBoid1);
+                forceBoid2 = steer_seek(Boids(2,:), Boids(1,:));
+                Boids(2,:) = applyForce(Boids(2,:), 3*forceBoid2);
+
+                RedrawBoids(Boids, 2, v_ImageXT, v_AlphaXT, BoidsPlot);
+                RedrawBoidsHP();
+                        TimeStick2 = TimeStick2 + 1;
+                        
+            end
+       end
+       check = check + 1;
+            CurrentBoid = Boids(1,:);
+            forceBoid1 = steer_seek(CurrentBoid, b41(1,1:3));
+            Boids(1,:) = applyForce(CurrentBoid, 3*forceBoid1);
+            forceBoid2 = steer_seek(Boids(2,:), Boids(1,:));
+            Boids(2,:) = applyForce(Boids(2,:), 3*forceBoid2);
+
+            RedrawBoids(Boids, 2, v_ImageXT, v_AlphaXT, BoidsPlot);
+            RedrawBoidsHP();
+            
+        
+      
+        % Sap doi hinh, tat ca cung tien vao trong khu vuc phong ngu cua
+        % dich
         if(pdist2(Boids(1,:), b41) < 500)
-            
-            while( Boids(1,15)>0)
-            
-                 c2=line([b41(1),Boids(1,1)], [b41(2), Boids(1, 2)], 'Color', 'blue','LineStyle','-.');
-                Boids(1,15)= Boids(1,15)-334;
+            while(Boids(1,15)>0)
+           %neu khong co vong lap while nay thi thanh mau e giam bot, nhung
+           %nhu the khong tieu diet hoan toan duoc
+                c2=line([b41(1),Boids(1,1)], [b41(2), Boids(1, 2)], 'Color', 'blue','LineStyle','-.');
+                Boids(1,15)= Boids(1,15)-200;
                 pause(0.05);
-                % xóa duong ??n c?
+                % x?a duong ??n c?
                 delete(c2);
                
                 if(Boids(1,15)>0)
                     pause(0.5)
                 end
             end
-            delete(BoidsPlot(1));
-            AliveXT(1,1)=0;
+        end
+        [J,tmpDist]=findTarget(Boids(1,:),BluesNum,Blues);  
+        if (J>0 && dist(Boids(1,:),Blues(J,:))<520)
+                 
+             while(Blues(J,15) > 0)
+             c1=line([Boids(1,1),Blues(J,1)], [Boids(1,2),Blues(J,2)], 'Color', 'red','LineStyle','-.');           
+             pause(0.02);
+   % xóa duong ??n c?
+            delete(c1);
+            Blues(J,15)=Blues(J,15)-60;
+                 if(Blues(J,15) > 0)
+                     pause(0.5)
+                 end          
+             end
+             RedrawBoids(Blues,BluesNum,v_ImageB,v_AlphaB,BluesPlot)
+             RedrawBlueHP()
         end
         
     end
+    % khi het mau la hien thi mo ne
+    RedrawBoid(Boids, 1, v_ImageXT, v_AlphaXT, BoidsPlot);
+    RedrawBoidsHP();
+    
+    
     forceBoid3 = steer_seek(Boids(2,:), b41(1,1:3));
-    Boids(2,:) = applyForce(Boids(2,:), 1.3*forceBoid3);
+    Boids(2,:) = applyForce(Boids(2,:), 4* forceBoid3);
     RedrawBoid(Boids, 2, v_ImageXT, v_AlphaXT, BoidsPlot);
     RedrawBoidsHP();
     
@@ -306,22 +439,25 @@ while(TimeStick6 < 200)
                  c2=line([Boids(2,1),b41(1)], [Boids(2,2),b41(2)], 'Color', 'red','LineStyle','-.');
             
                 pause(0.02);
-                % xóa duong ??n c?
+                % x?a duong ??n c?
                 delete(c2);
                 b41(1,15) = b41(1,15)-500;
                 if(b41(1,15)>0)
                     pause(0.5)
                 end
+                TimeStick6 =TimeStick6 +1;
             end
             radius = 100;
-            % tính khoang cah giua b41 va cac quan xanh
+            % t?nh khoang cah giua b41 va cac quan xanh
             dists = sqrt(sum((Blues - b41).^2,2));
             % tim cac quan xanh o trong ban kinh 10 so voi b41
             indices = find(dists<=radius);
             
-            delete(b41Plot);
+            %delete(b41Plot);
+            RedrawBoid(b41,1,v_Image41,v_Alpha41,b41Plot)
             delete(Blues(indices));
             
     end
     TimeStick6 =TimeStick6 +1;
 end
+
