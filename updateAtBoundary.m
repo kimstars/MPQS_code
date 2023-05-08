@@ -1,4 +1,4 @@
-function Boids = updateAtBoundary(Boids, BoidIndex) 
+function Boids = updateAtBoundary(Boids, BoidIndex)
 global EnvironmentWidth
 global SpeedCorrection
 

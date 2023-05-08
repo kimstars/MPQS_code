@@ -6,6 +6,7 @@ global MaxBlueNum MaxRedNum FightsNum;
 MaxBlueNum =6;
 MaxRedNum =15;
 global Reds;
+global Red2s;
 global Blues;
 global BoidsNum;
 global Boids;

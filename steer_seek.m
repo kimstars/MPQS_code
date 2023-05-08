@@ -11,3 +11,6 @@ desired = setMag(desired, v_maxspeed); % set magnitude
 steer = desired - v_vel;
 steer = setLimit(steer, v_maxforce); % set limit steer force
 end
+
+
+
