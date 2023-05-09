@@ -11,20 +11,20 @@
         global Blues;
         global MaxBlueNum;
         global ShootDistanceB ShootDistanceR;
-        global deviationXB deviationYB deviationXR deviationYR ;
+        global deviationXB deviationYB deviationXR deviationYR;
         global AccuracyB AccuracyR;
         global RandomPosition SafeDistance Flights FlightsNum ObstaclesF RedsNum Red2sNum DieRNum DieBNum goToAttack DameOfBlue DameOfRed;
-        global  RedsHP;
-        global  Red2sHP;
-        global ObstaclesR ;
-        global ObstaclesB ;
-        global  DieRNum DieBNum;
+        global RedsHP;
+        global Red2sHP;
+        global ObstaclesR;
+        global ObstaclesB;
+        global DieRNum DieBNum;
         global MaxRedNum;
         global endCombat;
 
         BoidsNum = 2; % so luong xe tang
+        RedsNum = 15;
         Red2sNum = 5;
-        RedsNum = 30 ;
         %% first draw
         [v_Image, v_Alpha, fHandler] = InitializeGraphics();
         BluesNum = 15;
@@ -70,13 +70,10 @@
         [Red2sPlot] = InitializeBoid(v_ImageR, v_AlphaR, v_ImageE, v_AlphaE, Red2sNum, Red2s);
         [Red2sHP] = InitializeRedHP(Red2sNum, MaxRedNum, Red2s);
 
-        
-
         %% MO CUA DANH CHIEN DAU CAU
         text_object = text(-800, 400, 'GD1: HOA LUC CHUAN BI', 'FontSize', 20, 'Color', 'red');
-        pause(3); 
+        pause(3);
         delete(text_object);
-
 
         %hoa luc chuan bi
         [v_ImageBMB0, v_AlphaBMB0] = LoadImageBase('boom.png', 100, 100, 0);
@@ -111,8 +108,6 @@
 
             TimeStick2 = TimeStick2 + 1;
         end
-
-
 
         % ve quan xanh
         [BluesPlot] = InitializeBoid(v_ImageB, v_AlphaB, v_ImageE, v_AlphaE, BluesNum, Blues);
@@ -164,7 +159,7 @@
         end
 
         text_object = text(-800, 400, 'GD2: NGHI BINH + DAT BOC PHA MO CUA', 'FontSize', 20, 'Color', 'red');
-        pause(3); 
+        pause(3);
         delete(text_object);
         %len vi tri HLCB
         nupR3 = [500 -370 0];
@@ -251,7 +246,7 @@
                 c1 = line([Red2s(ItemRed2, 1), 600 * rand()], [Red2s(ItemRed2, 2), 300 * rand()], 'Color', 'red', 'LineStyle', '-.');
                 [y, Fs] = audioread('soundgun.wav');
                 sound(y, Fs);
-                pause(0.03);
+                % pause(0.03);
                 delete(c1);
             end
 
@@ -261,10 +256,10 @@
         end
 
         %di chuyen len dat boc pha
-        datbocphaR = [-170 -45 0];
+        datbocphaR = [-170 -145 0];
         TimeStick5 = 1;
 
-        while (TimeStick5 < 100)
+        while (dist(Reds(:,1:3), datbocphaR) > 10)
 
             for ItemRed = 1:3
                 Reds = updateAtBoundary(Reds, ItemRed);
@@ -285,6 +280,9 @@
             RedrawGraphics(Reds, RedsNum, v_ImageR, v_AlphaR, RedsPlot);
             RedrawRedHP();
             TimeStick5 = TimeStick5 + 1;
+
+            if(dist(Reds(:,1:3), datbocphaR) == 10) break;
+
         end
 
         %hien boc pha

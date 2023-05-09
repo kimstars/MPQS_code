@@ -5,7 +5,7 @@ global EnvironmentWidth ImageWidth SafeDistance AlignmentRange CohesionRange...
     ShootDistanceB ShootDistanceR  ...
     Target1  Target2 ...
     DameOfBlue DameOfRed...
-    MaxRedNum MaxBlueNum  Reds  Blues Flights BloodPos SizeHPBar FlightsNum...
+    MaxRedNum MaxBlueNum  Reds Red2s  Blues Flights BloodPos SizeHPBar FlightsNum...
     AccuracyB AccuracyR;
 
 %% Accuracy
@@ -66,9 +66,8 @@ Red2s = zeros(MaxRedNum,15); % initialize boids matrix
 %}
 Red2s(:,1) = 150*(rand([MaxRedNum,1])) + 800; % set random position
 Red2s(:,2) = 150*(rand([MaxRedNum,1])) -950; % set random position
-%Reds(:,1:2) = 2; % set random position EnvironmentWidth*(2*rand([RedsNum,2])-1)
 Red2s(:,4:5) = 200; %200*(2*rand([BoidsNum,2])-1); % set random velocity
-Red2s(:,10) = 4;%*(rand([BoidsNum,1]) + 0.2); % set maxspeed
+Red2s(:,10) = 8;%*(rand([BoidsNum,1]) + 0.2); % set maxspeed
 Red2s(:,11) = 0.8; % set maxforce
 Red2s(:,13) = 200; % set max see ahead
 Red2s(:,14) = 10; % set max avoid force
