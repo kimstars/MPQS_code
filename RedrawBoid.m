@@ -1,7 +1,7 @@
 function RedrawBoid(Boids,BoidsNum,v_Image,v_Alpha,v_ImageE,v_AlphaE,BoidsPlot)
 global EnvironmentWidth;
 global ImageWidth;
-
+global noti
 
 for BoidIndex = 1 : BoidsNum
     if (Boids(BoidIndex, 15) > 0)            
@@ -22,10 +22,11 @@ for BoidIndex = 1 : BoidsNum
             BoidsPlot(BoidIndex).XData = Boids(BoidIndex,1)-ImageWidth/2;
             BoidsPlot(BoidIndex).YData = Boids(BoidIndex,2)-ImageWidth/2;
         catch Me
-            disp('hi')
+            disp('hi');
             [Boids(BoidIndex,1),Boids(BoidIndex,2)]
         end
     else
+        
         BoidsPlot(BoidIndex).CData = v_ImageE;
         BoidsPlot(BoidIndex).AlphaData = v_AlphaE;
     end

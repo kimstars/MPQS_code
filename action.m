@@ -2,7 +2,7 @@
         %% global variables
         global TimeSteps;
         global BoidsNum BluesHP BoidsHP;
-        global Boids Reds;
+        global Boids Reds Red2s;
         global Targets Target1 Target2;
         global SaveMousePosition;
         global Obstacles;
@@ -11,22 +11,20 @@
         global Blues;
         global MaxBlueNum;
         global ShootDistanceB ShootDistanceR;
-        global deviationXB deviationYB deviationXR deviationYR;
+        global deviationXB deviationYB deviationXR deviationYR ;
         global AccuracyB AccuracyR;
-        global RandomPosition SafeDistance Flights FlightsNum ObstaclesF RedsNum DieRNum DieBNum goToAttack DameOfBlue DameOfRed;
-        global RedsHP;
-        global ObstaclesR;
-        global ObstaclesB;
-        global DieRNum DieBNum;
+        global RandomPosition SafeDistance Flights FlightsNum ObstaclesF RedsNum Red2sNum DieRNum DieBNum goToAttack DameOfBlue DameOfRed;
+        global  RedsHP;
+        global  Red2sHP;
+        global ObstaclesR ;
+        global ObstaclesB ;
+        global  DieRNum DieBNum;
         global MaxRedNum;
         global endCombat;
-        global FleeDistance;
-        global D_BehindLeader;
 
-        BoidsNum = 3; % Choose number of Boids to demo
-        Boids(1, 10) = 1; % set max speed of 1-st Boid
-        Boids(2:BoidsNum, 10) = 1;
-
+        BoidsNum = 2; % so luong xe tang
+        Red2sNum = 5;
+        RedsNum = 30 ;
         %% first draw
         [v_Image, v_Alpha, fHandler] = InitializeGraphics();
         BluesNum = 15;
@@ -42,41 +40,352 @@
         [v_ImageB, v_AlphaB] = LoadImageBase('SoldierB.png', 60, 60, 0);
         [v_ImageE, v_AlphaE] = LoadImageBase('rip.png', 60, 60, 0);
         [v_ImageVic, v_AlphaVic] = LoadImageBase('victory.png', 300, 300, 0);
+        [v_ImageXT, v_AlphaXT] = LoadImageBase('xetang.png', 100, 100, 0);
+        [v_ImageR, v_AlphaR] = LoadImageBase('SoldierR.png', 60, 60, 0);
+
+        % Load hinh anh cua hai hang rao
+        width1 = 100;
+        width2 = width1;
+        height1 = 240;
+        height2 = height1;
+        rotation1 = 0;
+        rotation2 = 0;
+
+        [v_ImageFence1, v_AlphaFence1] = LoadImageBase('hangrao.png', width1, height1, rotation1);
+        [v_ImageFence2, v_AlphaFence2] = LoadImageBase('hangraomocua.png', width2, height2, rotation2);
+
+        % Khoi tai vi tri cua 2 hang rao
+        Fence1Position = [-85, -190, 0, 200, 0, 0];
+        Fence2Position = [-95, -200, 0, 190, 0, 0];
+
+        % Khoi tao 2 hang rao
+        [Fence1Plot] = InitializeFence(v_ImageFence1, v_AlphaFence1, Fence1Position);
+        [Fence2Plot] = InitializeFence(v_ImageFence2, v_AlphaFence2, Fence2Position);
+
+        %ve quan do
+        [RedsPlot] = InitializeBoid(v_ImageR, v_AlphaR, v_ImageE, v_AlphaE, RedsNum, Reds);
+        [RedsHP] = InitializeRedHP(RedsNum, MaxRedNum, Reds);
+
+        %ve quan do 2
+        [Red2sPlot] = InitializeBoid(v_ImageR, v_AlphaR, v_ImageE, v_AlphaE, Red2sNum, Red2s);
+        [Red2sHP] = InitializeRedHP(Red2sNum, MaxRedNum, Red2s);
+
+        
+
+        %% MO CUA DANH CHIEN DAU CAU
+        text_object = text(-800, 400, 'GD1: HOA LUC CHUAN BI', 'FontSize', 20, 'Color', 'red');
+        pause(3); 
+        delete(text_object);
+
+
+        %hoa luc chuan bi
+        [v_ImageBMB0, v_AlphaBMB0] = LoadImageBase('boom.png', 100, 100, 0);
+        TimeStick2 = 1;
+
+        while (TimeStick2 < 10)
+
+            for ItemBmb = 1
+
+                if (ItemBmb == 1)
+                    x = 600 * rand();
+                    y = 300 * rand();
+                    c1 = line([900, x], [-900, y], 'Color', 'red', 'LineStyle', '-.');
+                    c2 = line([900, x - 2], [-900, y - 2], 'Color', 'red', 'LineStyle', '-.');
+                    c3 = line([900, x - 1], [-900, y - 1], 'Color', 'red', 'LineStyle', '-.');
+                    c4 = line([900, x - 4], [-900, y - 4], 'Color', 'red', 'LineStyle', '-.');
+                    c5 = line([900, x - 3], [-900, y - 3], 'Color', 'red', 'LineStyle', '-.');
+                    BMBPosition = [y - 50, x - 50, 0, 200, 300, 0];
+                    [BMBPlot] = InitializeFence(v_ImageBMB0, v_AlphaBMB0, BMBPosition);
+                    [y, Fs] = audioread('soundbomb.wav');
+                    sound(y, Fs);
+                    pause(1);
+                    delete(c1);
+                    delete(c2);
+                    delete(c3);
+                    delete(c4);
+                    delete(c5);
+                    delete(BMBPlot);
+                end
+
+            end
+
+            TimeStick2 = TimeStick2 + 1;
+        end
+
+
 
         % ve quan xanh
         [BluesPlot] = InitializeBoid(v_ImageB, v_AlphaB, v_ImageE, v_AlphaE, BluesNum, Blues);
         [BluesHP] = InitializeHP(BluesNum, MaxBlueNum, Blues);
+        %quan dich ra sat hang rao
+        nupB = [400 0 0];
+        nupB1 = [650 100 0];
+        TimeStick2 = 1;
+
+        while (TimeStick2 < 300)
+
+            for ItemBlue = 7:8
+                Blues = updateAtBoundary(Blues, ItemBlue);
+                CurrentBlue = Blues(ItemBlue, :);
+                forceItem = steer_seek(CurrentBlue, nupB1);
+                Blues(ItemBlue, :) = applyForce(CurrentBlue, forceItem);
+            end
+
+            for ItemBlue = 9:10
+                Blues = updateAtBoundary(Blues, ItemBlue);
+                CurrentBlue = Blues(ItemBlue, :);
+                forceItem = steer_seek(CurrentBlue, nupB)
+                Blues(ItemBlue, :) = applyForce(CurrentBlue, forceItem);
+            end
+
+            RedrawGraphics(Blues, BluesNum, v_ImageB, v_AlphaB, BluesPlot);
+            RedrawBlueHP();
+            TimeStick2 = TimeStick2 + 1;
+        end
+
+        %len goc cay
+        nupR1 = [-20 -300 0];
+        nupR2 = [-420 -80 0];
+        nupR = [-870 -550 0];
+        TimeStick2 = 1;
+
+        while (TimeStick2 < 110)
+
+            for ItemRed = 1:3
+                Reds = updateAtBoundary(Reds, ItemRed);
+                CurrentRed = Reds(ItemRed, :);
+                forceItem = steer_seek(CurrentRed, nupR);
+                Reds(ItemRed, :) = applyForce(CurrentRed, forceItem);
+            end
+
+            RedrawGraphics(Reds, RedsNum, v_ImageR, v_AlphaR, RedsPlot);
+            RedrawRedHP();
+            TimeStick2 = TimeStick2 + 1;
+        end
+
+        text_object = text(-800, 400, 'GD2: NGHI BINH + DAT BOC PHA MO CUA', 'FontSize', 20, 'Color', 'red');
+        pause(3); 
+        delete(text_object);
+        %len vi tri HLCB
+        nupR3 = [500 -370 0];
+        nupR5 = [450 -600 0];
+        nupR4 = [900 -300 0];
+        TimeStick3 = 1
+
+        while (TimeStick3 < 225)
+
+            for ItemRed2 = 1:4
+                Red2s = updateAtBoundary(Red2s, ItemRed2);
+                CurrentRed = Red2s(ItemRed2, :);
+
+                if (ItemRed2 <= 1)
+                    forceItem = steer_seek(CurrentRed, nupR3);
+                    c1 = line([Red2s(ItemRed2, 1), 600 * rand()], [Red2s(ItemRed2, 2), 300 * rand()], 'Color', 'red', 'LineStyle', '-.');
+                    [y, Fs] = audioread('soundgun.wav');
+                    sound(y, Fs);
+                    pause(0.03);
+                    delete(c1);
+                end
+
+                if (ItemRed2 >= 2 && ItemRed2 <= 3)
+                    forceItem = steer_seek(CurrentRed, nupR4);
+                    c1 = line([Red2s(ItemRed2, 1), 600 * rand()], [Red2s(ItemRed2, 2), 300 * rand()], 'Color', 'red', 'LineStyle', '-.');
+                    [y, Fs] = audioread('soundgun.wav');
+                    sound(y, Fs);
+                    pause(0.03);
+                    delete(c1);
+                end
+
+                if (ItemRed2 == 4)
+                    forceItem = steer_seek(CurrentRed, nupR5);
+                    c1 = line([Red2s(ItemRed2, 1), 600 * rand()], [Red2s(ItemRed2, 2), 300 * rand()], 'Color', 'red', 'LineStyle', '-.');
+                    [y, Fs] = audioread('soundgun.wav');
+                    sound(y, Fs);
+                    pause(0.03);
+                    delete(c1);
+                end
+
+                Red2s(ItemRed2, :) = applyForce(CurrentRed, forceItem);
+            end
+
+            RedrawGraphics(Red2s, Red2sNum, v_ImageR, v_AlphaR, Red2sPlot);
+            RedrawRed2sHP();
+
+            %len vi tri 2 cuc da 2 ben
+
+            for ItemRed = 1:3
+                Reds = updateAtBoundary(Reds, ItemRed);
+                CurrentRed = Reds(ItemRed, :);
+
+                if (ItemRed <= 1)
+                    forceItem = steer_seek(CurrentRed, nupR1);
+                end
+
+                if (ItemRed >= 2)
+                    forceItem = steer_seek(CurrentRed, nupR2);
+                end
+
+                Reds(ItemRed, :) = applyForce(CurrentRed, forceItem);
+            end
+
+            RedrawGraphics(Reds, RedsNum, v_ImageR, v_AlphaR, RedsPlot);
+            RedrawRedHP();
+            TimeStick3 = TimeStick3 + 1;
+        end
+
+        %di chuyen ra giua
+        dichuyenR1 = [-200 -100 0];
+        TimeStick4 = 1;
+
+        while (TimeStick4 < 50)
+
+            for ItemRed = 1:3
+                Reds = updateAtBoundary(Reds, ItemRed);
+                CurrentRed = Reds(ItemRed, :);
+                forceItem = steer_seek(CurrentRed, dichuyenR1);
+                Reds(ItemRed, :) = applyForce(CurrentRed, forceItem);
+            end
+
+            for ItemRed2 = 1:4
+                Red2s = updateAtBoundary(Red2s, ItemRed2);
+                c1 = line([Red2s(ItemRed2, 1), 600 * rand()], [Red2s(ItemRed2, 2), 300 * rand()], 'Color', 'red', 'LineStyle', '-.');
+                [y, Fs] = audioread('soundgun.wav');
+                sound(y, Fs);
+                pause(0.03);
+                delete(c1);
+            end
+
+            RedrawGraphics(Reds, RedsNum, v_ImageR, v_AlphaR, RedsPlot);
+            RedrawRedHP();
+            TimeStick4 = TimeStick4 + 1;
+        end
+
+        %di chuyen len dat boc pha
+        datbocphaR = [-170 -45 0];
+        TimeStick5 = 1;
+
+        while (TimeStick5 < 100)
+
+            for ItemRed = 1:3
+                Reds = updateAtBoundary(Reds, ItemRed);
+                CurrentRed = Reds(ItemRed, :);
+                forceItem = steer_seek(CurrentRed, datbocphaR);
+                Reds(ItemRed, :) = applyForce(CurrentRed, forceItem);
+            end
+
+            for ItemRed2 = 1:4
+                Red2s = updateAtBoundary(Red2s, ItemRed2);
+                c1 = line([Red2s(ItemRed2, 1), 600 * rand()], [Red2s(ItemRed2, 2), 300 * rand()], 'Color', 'red', 'LineStyle', '-.');
+                [y, Fs] = audioread('soundgun.wav');
+                sound(y, Fs);
+                pause(0.03);
+                delete(c1);
+            end
+
+            RedrawGraphics(Reds, RedsNum, v_ImageR, v_AlphaR, RedsPlot);
+            RedrawRedHP();
+            TimeStick5 = TimeStick5 + 1;
+        end
+
+        %hien boc pha
+        [v_ImageTNT, v_AlphaTNT] = LoadImageBase('tnt.png', 90, 90, 0);
+        TNTPosition = [-40, -165 0, 180, 0, 0];
+        [TNTPlot] = InitializeFence(v_ImageTNT, v_AlphaTNT, TNTPosition);
+        %quay ve giua
+        TimeStick4 = 1;
+
+        while (TimeStick4 < 30)
+
+            for ItemRed = 1:3
+                Reds = updateAtBoundary(Reds, ItemRed);
+                CurrentRed = Reds(ItemRed, :);
+                forceItem = steer_seek(CurrentRed, dichuyenR1);
+                Reds(ItemRed, :) = applyForce(CurrentRed, forceItem);
+            end
+
+            for ItemRed2 = 1:4
+                Red2s = updateAtBoundary(Red2s, ItemRed2);
+                c1 = line([Red2s(ItemRed2, 1), 600 * rand()], [Red2s(ItemRed2, 2), 300 * rand()], 'Color', 'red', 'LineStyle', '-.');
+                [y, Fs] = audioread('soundgun.wav');
+                sound(y, Fs);
+                pause(0.03);
+                delete(c1);
+            end
+
+            RedrawGraphics(Reds, RedsNum, v_ImageR, v_AlphaR, RedsPlot);
+            RedrawRedHP();
+            TimeStick4 = TimeStick4 + 1;
+        end
+
+        %quay ve vi tri nup
+        TimeStick3 = 1
+
+        while (TimeStick3 < 100)
+
+            for ItemRed = 1:3
+                Reds = updateAtBoundary(Reds, ItemRed);
+                CurrentRed = Reds(ItemRed, :);
+
+                if (ItemRed <= 1)
+                    forceItem = steer_seek(CurrentRed, nupR1);
+                end
+
+                if (ItemRed >= 2)
+                    forceItem = steer_seek(CurrentRed, nupR2);
+                end
+
+                Reds(ItemRed, :) = applyForce(CurrentRed, forceItem);
+            end
+
+            for ItemRed2 = 1:4
+                Red2s = updateAtBoundary(Red2s, ItemRed2);
+                c1 = line([Red2s(ItemRed2, 1), 600 * rand()], [Red2s(ItemRed2, 2), 300 * rand()], 'Color', 'red', 'LineStyle', '-.');
+                [y, Fs] = audioread('soundgun.wav');
+                sound(y, Fs);
+                pause(0.03);
+                delete(c1);
+            end
+
+            RedrawGraphics(Reds, RedsNum, v_ImageR, v_AlphaR, RedsPlot);
+            RedrawRedHP();
+            TimeStick3 = TimeStick3 + 1;
+        end
+
+        %hien bomb no xoa hang rao va boc pha
+        [v_ImageBMB, v_AlphaBMB] = LoadImageBase('boom.png', 120, 300, 0);
+        BMBPosition = [-130, -220, 0, 200, 0, 0];
+        delete(TNTPlot);
+        [BMBPlot] = InitializeFence(v_ImageBMB, v_AlphaBMB, BMBPosition);
+        [y, Fs] = audioread('soundbomb.wav');
+        sound(y, Fs);
+        pause(2);
+        delete(Fence1Plot);
+        delete(Fence2Plot);
+        delete(BMBPlot);
+        %qun ra ra huong cua mo
+
+        %% MO CUA DANH CHIEN DAU CAU
+
+        % ve xe tang
+        Boids(1, 1:3) = [-400 -800 0];
+        Boids(2, 1:3) = [-900 -900 0];
+        Boids(1, :) = applyForce(Boids(1, :), 0);
+        Boids(1:BoidsNum, 15) = 1000;
+
+        [BoidsPlot] = InitializeBoid(v_ImageXT, v_AlphaXT, v_ImageE, v_AlphaE, BoidsNum, Boids);
+        [BoidsHP] = InitializaHPBoids(BoidsNum, 2, Boids);
+
+        RedsNum = 15;
+        MaxRedNum = 9;
+
+        % ve quan do
+        [v_ImageR, v_AlphaR] = LoadImageBase('SoldierR.png', 60, 60, 0);
+        [v_ImageE, v_AlphaE] = LoadImageBase('rip.png', 60, 60, 0);
+        [RedsPlot] = InitializeBoid(v_ImageR, v_AlphaR, v_ImageE, v_AlphaE, RedsNum, Reds);
+        [RedsHP] = InitializeRedHP(RedsNum, MaxRedNum, Reds);
 
         RedrawGraphics(Blues, BluesNum, v_ImageB, v_AlphaB, BluesPlot);
         RedrawBlueHP();
-        %% ve xe ta
-        %     %Boids o day la xe (3 xe)
-        %     Boids(:, 10) = 1;
-        %     Boids(1, 1:3) = [-450 -300 0];
-        %     Boids(2, 1:3) = [-550 -300 0];
-        %     Boids(3, 1:3) = [-650 -300 0];
-        %     Boids(1, :) = applyForce(Boids(1, :), 0);
-        %     Boids(1:BoidsNum, 15) = 1000;
-        %
-        %     [BoidsPlot] = InitializeBoid(v_Image, v_Alpha, v_ImageE, v_AlphaE, BoidsNum, Boids);
-        %     [BoidsHP] = InitializaHPBoids(BoidsNum, MaxBlueNum, Boids);
-        %
-        %     TargetBoid1 = [200 0 0];
-        %
-        %     while (Boids(1, 1) < 0)
-        %         CurrentBoid = Boids(1, :);
-        %         forceBoid1 = steer_seek(CurrentBoid, TargetBoid1);
-        %         Boids(1, :) = applyForce(CurrentBoid, forceBoid1);
-        %         forceBoid2 = steer_seek(Boids(2, :), Boids(1, :));
-        %         Boids(2, :) = applyForce(Boids(2, :), forceBoid2);
-        %         forceBoid3 = steer_seek(Boids(3, :), Boids(2, :));
-        %         Boids(3, :) = applyForce(Boids(3, :), forceBoid3);
-        %         Boids(1, 12) = 0;
-        %         Boids(2, 12) = 0;
-        %         Boids(3, 12) = 0;
-        %         RedrawBoids(Boids, 3, v_Image, v_Alpha, BoidsPlot);
-        %         RedrawBoidsHP();
-        %     end
 
         %% Chuyen quan den cac vi tri an nap
         % Cac vi tri an nap
@@ -88,8 +397,82 @@
 
         TimeStick1 = 1;
 
-        while (TimeStick1 < 350)
+        %% kiet code
+        % trien khai doi hinh
+        TargetReds = [30 180 0];
+        TargetXT = [10 420 0];
+        TimeStick1 = 1;
+        startcombat = 0;
 
+        while (dist(Reds(:, 1:3), TargetReds) > 100)
+            distance_target = (dist(Reds(:, 1:3), TargetReds));
+            AttackRed = zeros(1, RedsNum);
+            AttackBlue = zeros(1, BluesNum);
+            Target1 = [200 400 0];
+
+            for i = 1:RedsNum
+                Reds = updateAtBoundary(Reds, i);
+                CurrentRed = Reds(i, :);
+
+                arr_force = steer_arrival(CurrentRed, TargetReds);
+                flk_force = steer_flock(CurrentRed, Reds, RedsNum);
+                avd_force = steer_collision_avoidance1(CurrentRed, 1, Obstacles, ObstaclesNum);
+                force = arr_force * 1 + flk_force * 2 + avd_force * 7;
+                Reds(i, :) = applyForce(CurrentRed, force);
+
+                % den gan target, tim F ban
+                if (Reds(i, 15) > 0 && distance_target < 200)
+                    Reds = updateAtBoundary(Reds, i);
+                    CurrentBoid = Reds(i, :);
+                    [J, tmpDist] = findTarget(Reds(i, :), BluesNum, Blues);
+
+                    if (J > 0 && dist(Reds(i, :), Blues(J, :)) < ShootDistanceR)
+                        c1 = line([Reds(i, 1), Blues(J, 1)], [Reds(i, 2), Blues(J, 2)], 'Color', 'red', 'LineStyle', '-.');
+
+                        pause(0.2);
+                        delete(c1);
+
+                        if (sqrt(deviationXR * deviationXR + deviationYR * deviationYR) < 800)
+                            AttackBlue(1, J) = AttackBlue(1, J) + DameOfRed;
+                        end
+
+                    else
+                        steer_force = steer_wander(CurrentBoid);
+                        avd_force = steer_collision_avoidance1(CurrentBoid, 1, Obstacles, ObstaclesNum);
+                        flk_force = steer_flock(CurrentRed, Reds, RedsNum);
+
+                        if (J > 0)
+                            arr_force = steer_arrival(CurrentBoid, Blues(J, :));
+                        else
+                            arr_force = 0;
+                        end
+
+                        force = arr_force * 1.5 + steer_force * 1 + avd_force * 0.7 + flk_force * 0.5;
+                        Reds(i, :) = applyForce(CurrentBoid, force);
+
+                    end
+
+                end
+
+            end
+
+            if (distance_target < 700)
+                %xe tang di chuyen
+                for i = 1:BoidsNum
+                    Boids = updateAtBoundary(Boids, i);
+                    CurrentBoid = Boids(i, :);
+
+                    arr_force = steer_arrival(CurrentBoid, TargetXT);
+                    flk_force = steer_flock(CurrentBoid, Boids, BoidsNum);
+                    avd_force = steer_collision_avoidance1(CurrentBoid, 1, Obstacles, ObstaclesNum);
+                    force = arr_force * 1 + flk_force * 2 + avd_force * 7;
+                    Boids(i, :) = applyForce(CurrentBoid, force);
+
+                end
+
+            end
+
+            %dich di chuyen
             for ItemBlue = 1:BluesNum
                 Blues = updateAtBoundary(Blues, ItemBlue);
                 CurrentBlue = Blues(ItemBlue, :);
@@ -117,34 +500,25 @@
                 Blues(ItemBlue, :) = applyForce(CurrentBlue, forceItem);
             end
 
+            % ve lai vi tri cho moi frame
+            RedrawGraphics(Boids, BoidsNum, v_ImageXT, v_AlphaXT, BoidsPlot);
+            RedrawBoidsHP();
+
+            RedrawGraphics(Reds, RedsNum, v_ImageR, v_AlphaR, RedsPlot);
+            RedrawRedsHP();
+
             RedrawGraphics(Blues, BluesNum, v_ImageB, v_AlphaB, BluesPlot);
             RedrawBlueHP();
+
+            %% Update Blues
+            [BluesNum, Blues] = UpdateBoid(AttackBlue, BluesNum, Blues);
+            %% Update Reds
+            [RedsNum, Reds] = UpdateBoid(AttackRed, RedsNum, Reds);
+
             TimeStick1 = TimeStick1 + 1;
         end
 
-        % test di chuyen toi vi tri nao do
-        % TargetBoid1 = [-600 -200 0];
-        % TimeStick1 = 1;
-
-        % while (dist(Blues(:, 1:3), TargetBoid1) > 60)
-        %     disp(dist(Blues(:, 1:3), TargetBoid1));
-
-        %     for i = 1:BluesNum
-        %         Blues = updateAtBoundary(Blues, i);
-        %         CurrentBlue = Blues(i, :);
-
-        %         arr_force = steer_arrival(CurrentBlue, TargetBoid1);
-        %         flk_force = steer_flock(CurrentBlue, Blues, BluesNum);
-        %         avd_force = steer_collision_avoidance1(CurrentBlue, 1, Obstacles, ObstaclesNum);
-        %         force = arr_force * 1 + flk_force * 2 + avd_force * 7;
-        %         Blues(i, :) = applyForce(CurrentBlue, force);
-
-        %     end
-
-        %     RedrawGraphics(Blues, BluesNum, v_ImageB, v_AlphaB, BluesPlot);
-        %     RedrawBlueHP();
-        %     TimeStick1 = TimeStick1 + 1;
-        % end
+        disp("di chuyen xong -------------------------------");
 
         % leader following
         %     Target = [-200 -200 0 ];
@@ -170,36 +544,17 @@
         %     TimeStick1 = TimeStick1 + 1;
         %    end
 
-
-        RedsNum = 10;
-        MaxRedNum = 9;
-        Reds(:, 15) = 150;
-        % for i = 1:RedsNum
-        %     Reds(i, 1) = Boids(2, 1) + rand * 20;
-        %     Reds(i, 2) = Boids(2, 2) + rand * 20;
-        % end
-        % ve quan do
-        [v_ImageR, v_AlphaR] = LoadImageBase('SoldierR.png', 60, 60, 0);
-        [v_ImageE, v_AlphaE] = LoadImageBase('rip.png', 60, 60, 0);
-        [RedsPlot] = InitializeBoid(v_ImageR, v_AlphaR, v_ImageE, v_AlphaE, RedsNum, Reds);
-        [RedsHP] = InitializeHP(RedsNum, MaxRedNum, Reds);
-
-        RedrawBoid(Reds, RedsNum, v_ImageR, v_AlphaR, v_ImageE, v_AlphaE, RedsPlot);
-        RedrawRedsHP();
-
         %red tim F ban
 
-        for i = 1:RedsNum
-            Reds = updateAtBoundary(Reds, i);
-            CurrentRed = Reds(i, :);
+        % for i = 1:RedsNum
+        %     Reds = updateAtBoundary(Reds, i);
+        %     CurrentRed = Reds(i, :);
 
-            force = steer_wander(CurrentRed) + 2 * steer_collision_avoidance1(CurrentRed, 1, Obstacles, ObstaclesNum);
+        %     force = steer_wander(CurrentRed) + 2 * steer_collision_avoidance1(CurrentRed, 1, Obstacles, ObstaclesNum);
 
-            Reds(i, :) = applyForce(CurrentRed, force);
+        %     Reds(i, :) = applyForce(CurrentRed, force);
 
-        end
-
-       
+        % end
 
         endCombat = 0;
 
@@ -225,7 +580,7 @@
                 AttackRed = zeros(1, RedsNum);
 
                 for i = 1:BluesNum
-                    %J chỉ số mục tiêu gần nhất
+                    %blue tim red
                     if (Blues(i, 15) > 0)
                         Blues = updateAtBoundary(Blues, i);
                         CurrentBoid = Blues(i, :);
@@ -262,42 +617,40 @@
 
                 AttackBlue = zeros(1, BluesNum);
                 Target1 = [200 400 0]
-                if (DieRNum < RedsNum - 3)
+                %red tim blue
 
-                    for i = 1:RedsNum
+                for i = 1:RedsNum
 
-                        if (Reds(i, 15) > 0)
-                            Reds = updateAtBoundary(Reds, i);
-                            CurrentBoid = Reds(i, :);
-                            [J, tmpDist] = findTarget(Reds(i, :), BluesNum, Blues);
+                    if (Reds(i, 15) > 0)
+                        Reds = updateAtBoundary(Reds, i);
+                        CurrentBoid = Reds(i, :);
+                        [J, tmpDist] = findTarget(Reds(i, :), BluesNum, Blues);
 
-                            if (J > 0 && dist(Reds(i, :), Blues(J, :)) < ShootDistanceR)
-                                c1 = line([Reds(i, 1), Blues(J, 1)], [Reds(i, 2), Blues(J, 2)], 'Color', 'red', 'LineStyle', '-.');
+                        if (J > 0 && dist(Reds(i, :), Blues(J, :)) < ShootDistanceR)
+                            c1 = line([Reds(i, 1), Blues(J, 1)], [Reds(i, 2), Blues(J, 2)], 'Color', 'red', 'LineStyle', '-.');
 
-                                pause(0.2);
-                                delete(c1);
-                                % cach nhau 800 va ban
-                                % nhau thi ghi Blue vao
-                                % bang lu dame dang
-                                % phai ganh chiu
-                                if (sqrt(deviationXR * deviationXR + deviationYR * deviationYR) < 800)
-                                    AttackBlue(1, J) = AttackBlue(1, J) + DameOfRed;
-                                end
-
-                            else
-                                steer_force = steer_wander(CurrentBoid);
-                                avd_force = steer_collision_avoidance1(CurrentBoid, 1, Obstacles, ObstaclesNum);
-
-                                if (J > 0)
-                                    arr_force = steer_arrival(CurrentBoid, Blues(J, :));
-                                else
-                                    arr_force = 0;
-                                end
-
-                                force = arr_force * 1 + steer_force * 1 + avd_force * 0.7;
-                                Reds(i, :) = applyForce(CurrentBoid, force);
-
+                            pause(0.2);
+                            delete(c1);
+                            % cach nhau 800 va ban
+                            % nhau thi ghi Blue vao
+                            % bang lu dame dang
+                            % phai ganh chiu
+                            if (sqrt(deviationXR * deviationXR + deviationYR * deviationYR) < 800)
+                                AttackBlue(1, J) = AttackBlue(1, J) + DameOfRed;
                             end
+
+                        else
+                            steer_force = steer_wander(CurrentBoid);
+                            avd_force = steer_collision_avoidance1(CurrentBoid, 1, Obstacles, ObstaclesNum);
+
+                            if (J > 0)
+                                arr_force = steer_arrival(CurrentBoid, Blues(J, :));
+                            else
+                                arr_force = 0;
+                            end
+
+                            force = arr_force * 1 + steer_force * 1 + avd_force * 0.7;
+                            Reds(i, :) = applyForce(CurrentBoid, force);
 
                         end
 
@@ -332,7 +685,6 @@
                     end
 
                 end
-
 
             end
 
