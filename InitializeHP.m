@@ -14,7 +14,7 @@ for i=1:MaxBoidNum
         blood=0;
     end       
     x1=Boids(i,1);
-    x2=Boids(i,1)+blood/2;
+    x2=Boids(i,1)+ blood/2;
     y1=Boids(i,2)+BloodPos + 60;
     y2=Boids(i,2)+BloodPos + 60;            
     HPPlot(i)=plot([x1 x2],[y1 y2],'-','Color','b','LineWidth',SizeHPBar);            

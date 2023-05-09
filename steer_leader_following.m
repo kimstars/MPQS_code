@@ -14,8 +14,8 @@ v_max_see_ahead = CurrentBoid(13);
 % tv_head = setMag(tv_head, LeaderSeeAhead);
 % LeaderAhead = p_leader + tv_head;
 
-tv_behind = -v_leader;
-tv_behind = setMag(tv_behind, D_BehindLeader);
+tv_behind = v_leader;
+tv_behind = -setMag(tv_behind, D_BehindLeader);
 p_following = p_leader + tv_behind;
 
 delete(SaveBehindLeader);

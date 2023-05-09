@@ -86,10 +86,11 @@ Boids = zeros(BoidsNum,15); % initialize boids matrix
 %{1-3 position, 4-6 velocity, 7-9 accelaration, 10 maxspeed, 11 maxforce, 12 angle,
 % 13 max see ahead (for collision avoidance), 14 max avoid force (collision avoidance)
 %}
-Boids(:,1:2) = EnvironmentWidth*(2*rand([BoidsNum,2])-1); % set random position
+Boids(:,1) = -1100+500*(rand([BoidsNum,1])); % set random position
+Boids(:,2)= -800+500*(rand([BoidsNum,1]));
 Boids(:,4:5) = 200; %200*(2*rand([BoidsNum,2])-1); % set random velocity
-Boids(:,10) = 1;%*(rand([BoidsNum,1]) + 0.2); % set maxspeed
-Boids(:,11) = 0.2; % set maxforce
+Boids(:,10) = 4;%*(rand([BoidsNum,1]) + 0.2); % set maxspeed
+Boids(:,11) = 10; % set maxforce
 Boids(:,13) = 100; % set max see ahead
 Boids(:,14) = 10; % set max avoid force
 Boids(:,15) = 500 ;
@@ -99,8 +100,8 @@ Boids(:,15) = 500 ;
 Targets = zeros(TargetsNum,14);
 Targets(:,1:2) = rand([TargetsNum,2])-1; % set random position
 Targets(:,4:5) = 2*(2*rand([TargetsNum,2])-1); % set random velocity
-Targets(:,10) = 2; % set maxspeed
-Targets(:,11) = 20; % set maxforce
+Targets(:,10) = 4; % set maxspeed
+Targets(:,11) = 40; % set maxforce
 Targets(:,13) = 160; % set max see ahead
 Targets(:,14) = 2; % set max avoid force
 
