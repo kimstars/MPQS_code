@@ -664,7 +664,7 @@
 
             for i = 1:RedsNum
 
-                if (dist(Reds(RedsNum, 1:3), tam) < 150)
+                if (dist(Reds(RedsNum-2, 1:3), tam) < 150)
                     done = 1;
                 end
 
@@ -774,7 +774,7 @@
                     CurrentRed = Reds(i, :);
                     inCamp = dist(CurrentRed(1:3), tam)
 
-                    if (inCamp < 500)
+                    if (inCamp < 560)
                         [J, tmpDist] = findTarget(Reds(i, :), BluesNum, Blues);
 
                         if (J > 0 && dist(Reds(i, :), Blues(J, :)) < ShootDistanceR)
