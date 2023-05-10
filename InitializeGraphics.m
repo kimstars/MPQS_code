@@ -111,5 +111,4 @@ for i = 1:ObstaclesNum
 end
 
 
-BluesNum = 5; % Choose number of Boids to demo
-RedsNum = 5; % Choose number of Boids to demo
+
