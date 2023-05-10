@@ -99,8 +99,7 @@ AddObstacles(p1,p2);
 p1 = [350 -20 -1, 200 -200 0];
 p2 = [100 0 -1, 200 -200 0];
 AddObstacles(p1,p2);
-   
-noti = [-400 800 -1, 200 -200 0];
+
 
 
 for i = 1:ObstaclesNum

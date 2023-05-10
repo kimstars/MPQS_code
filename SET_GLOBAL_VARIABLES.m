@@ -53,9 +53,9 @@ function SET_GLOBAL_VARIABLES()
 
     DameOfBlue = 5;
     DameOfRed = 5;
-    MaxBlueNum = 20;
-    ShootDistanceB = 250;
-    ShootDistanceR = 250;
+    MaxBlueNum = 10;
+    ShootDistanceB = 130;
+    ShootDistanceR = 130;
     Target1 = [-400 -400 0];
     Target2 = [100 100 0];
     SizeHPBar = 1;
