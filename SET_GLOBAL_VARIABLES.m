@@ -101,7 +101,7 @@ function SET_GLOBAL_VARIABLES()
     Blues(:, 1) = 50 * (rand([MaxBlueNum, 1])) + 350; % set random position
     Blues(:, 2) = 50 * (rand([MaxBlueNum, 1])) + 100; % set random position
     Blues(:, 4:5) = 200; %200*(2*rand([BoidsNum,2])-1); % set random velocity
-    Blues(:, 10) = 5; %*(rand([BoidsNum,1]) + 0.2); % set maxspeed
+    Blues(:, 10) = 8; %*(rand([BoidsNum,1]) + 0.2); % set maxspeed
     Blues(:, 11) = 0.4; % set maxforce
     Blues(:, 13) = 200; % set max see ahead
     Blues(:, 14) = 10; % set max avoid force

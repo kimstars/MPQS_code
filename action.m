@@ -89,42 +89,42 @@
 
         %% MO CUA DANH CHIEN DAU CAU
         text_object = text(-800, 400, 'GD1: HOA LUC CHUAN BI', 'FontSize', 20, 'Color', 'red');
-        % pause(3);
+        pause(3);
         delete(text_object);
 
-        %hoa luc chuan bi
-        % [v_ImageBMB0, v_AlphaBMB0] = LoadImageBase('boom.png', 100, 100, 0);
-        % TimeStick2 = 1;
+        %hoa luc chuan bi /ok
+        [v_ImageBMB0, v_AlphaBMB0] = LoadImageBase('boom.png', 100, 100, 0);
+        TimeStick2 = 1;
 
-        % while (TimeStick2 < 10)
+        while (TimeStick2 < 10)
 
-        %     for ItemBmb = 1
+            for ItemBmb = 1
 
-        %         if (ItemBmb == 1)
-        %             x = 600 * rand();
-        %             y = 300 * rand();
-        %             c1 = line([900, x], [-900, y], 'Color', 'red', 'LineStyle', '-.');
-        %             c2 = line([900, x - 2], [-900, y - 2], 'Color', 'red', 'LineStyle', '-.');
-        %             c3 = line([900, x - 1], [-900, y - 1], 'Color', 'red', 'LineStyle', '-.');
-        %             c4 = line([900, x - 4], [-900, y - 4], 'Color', 'red', 'LineStyle', '-.');
-        %             c5 = line([900, x - 3], [-900, y - 3], 'Color', 'red', 'LineStyle', '-.');
-        %             BMBPosition = [y - 50, x - 50, 0, 200, 300, 0];
-        %             [BMBPlot] = InitializeFence(v_ImageBMB0, v_AlphaBMB0, BMBPosition);
-        %             [y, Fs] = audioread('soundbomb.wav');
-        %             sound(y, Fs);
-        %             pause(1);
-        %             delete(c1);
-        %             delete(c2);
-        %             delete(c3);
-        %             delete(c4);
-        %             delete(c5);
-        %             delete(BMBPlot);
-        %         end
+                if (ItemBmb == 1)
+                    x = 600 * rand();
+                    y = 300 * rand();
+                    c1 = line([900, x], [-900, y], 'Color', 'red', 'LineStyle', '-.');
+                    c2 = line([900, x - 2], [-900, y - 2], 'Color', 'red', 'LineStyle', '-.');
+                    c3 = line([900, x - 1], [-900, y - 1], 'Color', 'red', 'LineStyle', '-.');
+                    c4 = line([900, x - 4], [-900, y - 4], 'Color', 'red', 'LineStyle', '-.');
+                    c5 = line([900, x - 3], [-900, y - 3], 'Color', 'red', 'LineStyle', '-.');
+                    BMBPosition = [y - 50, x - 50, 0, 200, 300, 0];
+                    [BMBPlot] = InitializeFence(v_ImageBMB0, v_AlphaBMB0, BMBPosition);
+                    [y, Fs] = audioread('soundbomb.wav');
+                    sound(y, Fs);
+                    pause(1);
+                    delete(c1);
+                    delete(c2);
+                    delete(c3);
+                    delete(c4);
+                    delete(c5);
+                    delete(BMBPlot);
+                end
 
-        %     end
+            end
 
-        %     TimeStick2 = TimeStick2 + 1;
-        % end
+            TimeStick2 = TimeStick2 + 1;
+        end
 
         % ve quan xanh
         [BluesPlot] = InitializeBoid(v_ImageB, v_AlphaB, v_ImageE, v_AlphaE, BluesNum, Blues);
@@ -134,26 +134,26 @@
         nupB1 = [650 100 0];
         TimeStick2 = 1;
 
-        % while (TimeStick2 < 300)
+        while (TimeStick2 < 300)
 
-        %     for ItemBlue = 7:8
-        %         Blues = updateAtBoundary(Blues, ItemBlue);
-        %         CurrentBlue = Blues(ItemBlue, :);
-        %         forceItem = steer_seek(CurrentBlue, nupB1);
-        %         Blues(ItemBlue, :) = applyForce(CurrentBlue, forceItem);
-        %     end
+            for ItemBlue = 7:8
+                Blues = updateAtBoundary(Blues, ItemBlue);
+                CurrentBlue = Blues(ItemBlue, :);
+                forceItem = steer_seek(CurrentBlue, nupB1);
+                Blues(ItemBlue, :) = applyForce(CurrentBlue, forceItem);
+            end
 
-        %     for ItemBlue = 9:10
-        %         Blues = updateAtBoundary(Blues, ItemBlue);
-        %         CurrentBlue = Blues(ItemBlue, :);
-        %         forceItem = steer_seek(CurrentBlue, nupB)
-        %         Blues(ItemBlue, :) = applyForce(CurrentBlue, forceItem);
-        %     end
+            for ItemBlue = 9:10
+                Blues = updateAtBoundary(Blues, ItemBlue);
+                CurrentBlue = Blues(ItemBlue, :);
+                forceItem = steer_seek(CurrentBlue, nupB)
+                Blues(ItemBlue, :) = applyForce(CurrentBlue, forceItem);
+            end
 
-        %     RedrawGraphics(Blues, BluesNum, v_ImageB, v_AlphaB, BluesPlot);
-        %     RedrawBlueHP();
-        %     TimeStick2 = TimeStick2 + 1;
-        % end
+            RedrawGraphics(Blues, BluesNum, v_ImageB, v_AlphaB, BluesPlot);
+            RedrawBlueHP();
+            TimeStick2 = TimeStick2 + 1;
+        end
 
         %len goc cay
         nupR1 = [-20 -300 0];
@@ -161,19 +161,19 @@
         nupR = [-870 -550 0];
         TimeStick2 = 1;
 
-        % while (TimeStick2 < 110)
+        while (TimeStick2 < 110)
 
-        %     for ItemRed = 1:3
-        %         Reds = updateAtBoundary(Reds, ItemRed);
-        %         CurrentRed = Reds(ItemRed, :);
-        %         forceItem = steer_seek(CurrentRed, nupR);
-        %         Reds(ItemRed, :) = applyForce(CurrentRed, forceItem);
-        %     end
+            for ItemRed = 1:3
+                Reds = updateAtBoundary(Reds, ItemRed);
+                CurrentRed = Reds(ItemRed, :);
+                forceItem = steer_seek(CurrentRed, nupR);
+                Reds(ItemRed, :) = applyForce(CurrentRed, forceItem);
+            end
 
-        %     RedrawGraphics(Reds, RedsNum, v_ImageR, v_AlphaR, RedsPlot);
-        %     RedrawRedHP();
-        %     TimeStick2 = TimeStick2 + 1;
-        % end
+            RedrawGraphics(Reds, RedsNum, v_ImageR, v_AlphaR, RedsPlot);
+            RedrawRedHP();
+            TimeStick2 = TimeStick2 + 1;
+        end
 
         text_object = text(-800, 400, 'GD2: NGHI BINH + DAT BOC PHA MO CUA', 'FontSize', 20, 'Color', 'red');
         pause(3);
@@ -184,126 +184,126 @@
         nupR4 = [900 -300 0];
         TimeStick3 = 1
 
-        % while (TimeStick3 < 225)
-        %     disp("len vi tri hlcb");
+        while (TimeStick3 < 225)
+            disp("len vi tri hlcb");
 
-        %     for ItemRed2 = 1:4
-        %         Red2s = updateAtBoundary(Red2s, ItemRed2);
-        %         CurrentRed = Red2s(ItemRed2, :);
+            for ItemRed2 = 1:4
+                Red2s = updateAtBoundary(Red2s, ItemRed2);
+                CurrentRed = Red2s(ItemRed2, :);
 
-        %         if (ItemRed2 <= 1)
-        %             forceItem = steer_seek(CurrentRed, nupR3);
-        %             c1 = line([Red2s(ItemRed2, 1), 600 * rand()], [Red2s(ItemRed2, 2), 300 * rand()], 'Color', 'red', 'LineStyle', '-.');
-        %             % [y, Fs] = audioread('soundgun.wav');
-        %             % sound(y, Fs);
-        %             % pause(0.03);
-        %             delete(c1);
-        %         end
+                if (ItemRed2 <= 1)
+                    forceItem = steer_seek(CurrentRed, nupR3);
+                    c1 = line([Red2s(ItemRed2, 1), 600 * rand()], [Red2s(ItemRed2, 2), 300 * rand()], 'Color', 'red', 'LineStyle', '-.');
+                    % [y, Fs] = audioread('soundgun.wav');
+                    % sound(y, Fs);
+                    % pause(0.03);
+                    delete(c1);
+                end
 
-        %         if (ItemRed2 >= 2 && ItemRed2 <= 3)
-        %             forceItem = steer_seek(CurrentRed, nupR4);
-        %             c1 = line([Red2s(ItemRed2, 1), 600 * rand()], [Red2s(ItemRed2, 2), 300 * rand()], 'Color', 'red', 'LineStyle', '-.');
-        %             % [y, Fs] = audioread('soundgun.wav');
-        %             % sound(y, Fs);
-        %             % pause(0.03);
-        %             delete(c1);
-        %         end
+                if (ItemRed2 >= 2 && ItemRed2 <= 3)
+                    forceItem = steer_seek(CurrentRed, nupR4);
+                    c1 = line([Red2s(ItemRed2, 1), 600 * rand()], [Red2s(ItemRed2, 2), 300 * rand()], 'Color', 'red', 'LineStyle', '-.');
+                    % [y, Fs] = audioread('soundgun.wav');
+                    % sound(y, Fs);
+                    % pause(0.03);
+                    delete(c1);
+                end
 
-        %         if (ItemRed2 == 4)
-        %             forceItem = steer_seek(CurrentRed, nupR5);
-        %             c1 = line([Red2s(ItemRed2, 1), 600 * rand()], [Red2s(ItemRed2, 2), 300 * rand()], 'Color', 'red', 'LineStyle', '-.');
-        %             % [y, Fs] = audioread('soundgun.wav');
-        %             % sound(y, Fs);
-        %             % pause(0.03);
-        %             delete(c1);
-        %         end
+                if (ItemRed2 == 4)
+                    forceItem = steer_seek(CurrentRed, nupR5);
+                    c1 = line([Red2s(ItemRed2, 1), 600 * rand()], [Red2s(ItemRed2, 2), 300 * rand()], 'Color', 'red', 'LineStyle', '-.');
+                    % [y, Fs] = audioread('soundgun.wav');
+                    % sound(y, Fs);
+                    % pause(0.03);
+                    delete(c1);
+                end
 
-        %         Red2s(ItemRed2, :) = applyForce(CurrentRed, forceItem);
-        %     end
+                Red2s(ItemRed2, :) = applyForce(CurrentRed, forceItem);
+            end
 
-        %     RedrawGraphics(Red2s, Red2sNum, v_ImageR, v_AlphaR, Red2sPlot);
-        %     RedrawRed2sHP();
+            RedrawGraphics(Red2s, Red2sNum, v_ImageR, v_AlphaR, Red2sPlot);
+            RedrawRed2sHP();
 
-        %     %len vi tri 2 cuc da 2 ben
+            %len vi tri 2 cuc da 2 ben
 
-        %     for ItemRed = 1:3
-        %         Reds = updateAtBoundary(Reds, ItemRed);
-        %         CurrentRed = Reds(ItemRed, :);
+            for ItemRed = 1:3
+                Reds = updateAtBoundary(Reds, ItemRed);
+                CurrentRed = Reds(ItemRed, :);
 
-        %         if (ItemRed <= 1)
-        %             forceItem = steer_seek(CurrentRed, nupR1);
+                if (ItemRed <= 1)
+                    forceItem = steer_seek(CurrentRed, nupR1);
 
-        %         end
+                end
 
-        %         if (ItemRed >= 2)
-        %             forceItem = steer_seek(CurrentRed, nupR2);
-        %         end
+                if (ItemRed >= 2)
+                    forceItem = steer_seek(CurrentRed, nupR2);
+                end
 
-        %         forceItem = forceItem ;
+                forceItem = forceItem ;
 
-        %         Reds(ItemRed, :) = applyForce(CurrentRed, forceItem);
-        %     end
+                Reds(ItemRed, :) = applyForce(CurrentRed, forceItem);
+            end
 
-        %     RedrawGraphics(Reds, RedsNum, v_ImageR, v_AlphaR, RedsPlot);
-        %     RedrawRedHP();
-        %     TimeStick3 = TimeStick3 + 1;
-        % end
+            RedrawGraphics(Reds, RedsNum, v_ImageR, v_AlphaR, RedsPlot);
+            RedrawRedHP();
+            TimeStick3 = TimeStick3 + 1;
+        end
 
         %di chuyen ra giua / ??
 
-        % dichuyenR1 = [-200 -100 0];
-        % TimeStick4 = 1;
-        % disp("di chuyen ra giua");
+        dichuyenR1 = [-200 -100 0];
+        TimeStick4 = 1;
+        disp("di chuyen ra giua");
 
-        % while (TimeStick4 < 50)
+        while (TimeStick4 < 50)
 
-        %     for ItemRed = 1:3
-        %         Reds = updateAtBoundary(Reds, ItemRed);
-        %         CurrentRed = Reds(ItemRed, :);
-        %         forceItem = steer_seek(CurrentRed, dichuyenR1);
-        %         Reds(ItemRed, :) = applyForce(CurrentRed, forceItem);
-        %     end
+            for ItemRed = 1:3
+                Reds = updateAtBoundary(Reds, ItemRed);
+                CurrentRed = Reds(ItemRed, :);
+                forceItem = steer_seek(CurrentRed, dichuyenR1);
+                Reds(ItemRed, :) = applyForce(CurrentRed, forceItem);
+            end
 
-        %     for ItemRed2 = 1:4
-        %         Red2s = updateAtBoundary(Red2s, ItemRed2);
-        %         c1 = line([Red2s(ItemRed2, 1), 600 * rand()], [Red2s(ItemRed2, 2), 300 * rand()], 'Color', 'red', 'LineStyle', '-.');
-        %         % [y, Fs] = audioread('soundgun.wav');
-        %         % sound(y, Fs);
-        %         pause(0.03);
-        %         delete(c1);
-        %     end
+            for ItemRed2 = 1:4
+                Red2s = updateAtBoundary(Red2s, ItemRed2);
+                c1 = line([Red2s(ItemRed2, 1), 600 * rand()], [Red2s(ItemRed2, 2), 300 * rand()], 'Color', 'red', 'LineStyle', '-.');
+                % [y, Fs] = audioread('soundgun.wav');
+                % sound(y, Fs);
+                pause(0.03);
+                delete(c1);
+            end
 
-        %     RedrawGraphics(Reds, RedsNum, v_ImageR, v_AlphaR, RedsPlot);
-        %     RedrawRedHP();
-        %     TimeStick4 = TimeStick4 + 1;
-        % end
+            RedrawGraphics(Reds, RedsNum, v_ImageR, v_AlphaR, RedsPlot);
+            RedrawRedHP();
+            TimeStick4 = TimeStick4 + 1;
+        end
 
         %di chuyen len dat boc pha / ok lay
         datbocphaR = [-170 -145 0];
         TimeStick5 = 1;
 
-        % while (TimeStick5 < 100)
-        %     disp("di chuyen dat buoc pha");
+        while (TimeStick5 < 100)
+            disp("di chuyen dat buoc pha");
 
-        %     for ItemRed = 1:3
-        %         Reds = updateAtBoundary(Reds, ItemRed);
-        %         CurrentRed = Reds(ItemRed, :);
-        %         forceItem = steer_seek(CurrentRed, datbocphaR);
-        %         Reds(ItemRed, :) = applyForce(CurrentRed, forceItem);
-        %     end
+            for ItemRed = 1:3
+                Reds = updateAtBoundary(Reds, ItemRed);
+                CurrentRed = Reds(ItemRed, :);
+                forceItem = steer_seek(CurrentRed, datbocphaR);
+                Reds(ItemRed, :) = applyForce(CurrentRed, forceItem);
+            end
 
-        %     for ItemRed2 = 1:4
-        %         Red2s = updateAtBoundary(Red2s, ItemRed2);
-        %         c1 = line([Red2s(ItemRed2, 1), 600 * rand()], [Red2s(ItemRed2, 2), 300 * rand()], 'Color', 'red', 'LineStyle', '-.');
-        %         % [y, Fs] = audioread('soundgun.wav');
-        %         % sound(y, Fs);
-        %         % pause(0.03);
-        %         delete(c1);
-        %     end
+            for ItemRed2 = 1:4
+                Red2s = updateAtBoundary(Red2s, ItemRed2);
+                c1 = line([Red2s(ItemRed2, 1), 600 * rand()], [Red2s(ItemRed2, 2), 300 * rand()], 'Color', 'red', 'LineStyle', '-.');
+                % [y, Fs] = audioread('soundgun.wav');
+                % sound(y, Fs);
+                % pause(0.03);
+                delete(c1);
+            end
 
-        %     RedrawGraphics(Reds, RedsNum, v_ImageR, v_AlphaR, RedsPlot);
-        %     RedrawRedHP();
-        %     TimeStick5 = TimeStick5 + 1;
+            RedrawGraphics(Reds, RedsNum, v_ImageR, v_AlphaR, RedsPlot);
+            RedrawRedHP();
+            TimeStick5 = TimeStick5 + 1;
 
         % end
 
@@ -342,36 +342,36 @@
         %quay ve vi tri nup
         TimeStick3 = 1
 
-        % while (TimeStick3 < 100)
+        while (TimeStick3 < 100)
 
-        %     for ItemRed = 1:3
-        %         Reds = updateAtBoundary(Reds, ItemRed);
-        %         CurrentRed = Reds(ItemRed, :);
+            for ItemRed = 1:3
+                Reds = updateAtBoundary(Reds, ItemRed);
+                CurrentRed = Reds(ItemRed, :);
 
-        %         if (ItemRed <= 1)
-        %             forceItem = steer_seek(CurrentRed, nupR1);
-        %         end
+                if (ItemRed <= 1)
+                    forceItem = steer_seek(CurrentRed, nupR1);
+                end
 
-        %         if (ItemRed >= 2)
-        %             forceItem = steer_seek(CurrentRed, nupR2);
-        %         end
+                if (ItemRed >= 2)
+                    forceItem = steer_seek(CurrentRed, nupR2);
+                end
 
-        %         Reds(ItemRed, :) = applyForce(CurrentRed, forceItem);
-        %     end
+                Reds(ItemRed, :) = applyForce(CurrentRed, forceItem);
+            end
 
-        %     for ItemRed2 = 1:4
-        %         Red2s = updateAtBoundary(Red2s, ItemRed2);
-        %         c1 = line([Red2s(ItemRed2, 1), 600 * rand()], [Red2s(ItemRed2, 2), 300 * rand()], 'Color', 'red', 'LineStyle', '-.');
-        %         % [y, Fs] = audioread('soundgun.wav');
-        %         % sound(y, Fs);
-        %         % pause(0.03);
-        %         delete(c1);
-        %     end
+            for ItemRed2 = 1:4
+                Red2s = updateAtBoundary(Red2s, ItemRed2);
+                c1 = line([Red2s(ItemRed2, 1), 600 * rand()], [Red2s(ItemRed2, 2), 300 * rand()], 'Color', 'red', 'LineStyle', '-.');
+                % [y, Fs] = audioread('soundgun.wav');
+                % sound(y, Fs);
+                % pause(0.03);
+                delete(c1);
+            end
 
-        %     RedrawGraphics(Reds, RedsNum, v_ImageR, v_AlphaR, RedsPlot);
-        %     RedrawRedHP();
-        %     TimeStick3 = TimeStick3 + 1;
-        % end
+            RedrawGraphics(Reds, RedsNum, v_ImageR, v_AlphaR, RedsPlot);
+            RedrawRedHP();
+            TimeStick3 = TimeStick3 + 1;
+        end
 
         %hien bomb no xoa hang rao va boc pha
         [v_ImageBMB, v_AlphaBMB] = LoadImageBase('boom.png', 120, 300, 0);
@@ -695,6 +695,10 @@
             plot(obstacle(1), obstacle(2), 'o','MarkerSize',5, 'MarkerFaceColor','red','Color','red');
             
         end
+
+        text_object = text(-800, 400, 'GD3: LUC SUC TIEU DIET DICH TRONG DOANH TRAI', 'FontSize', 20, 'Color', 'red');
+        pause(3);
+        delete(text_object);
 
         while (endCombat == 0)
 
