@@ -1,18 +1,18 @@
-function AddObstacles(p1,p2)
+function AddObstacles(p1,p2,num)
     global Obstacles;
     global ObstaclesNum;
 
-    delta_p = (p2 - p1) / 10; % chia ?o?n t? p1 ??n p2 thành 10 ph?n b?ng nhau
+    delta_p = (p2 - p1) / num; % chia ?o?n t? p1 ??n p2 thï¿½nh 10 ph?n b?ng nhau
     disp(delta_p)
     points = [p1];
 
-    for i = 1:10
+    for i = 1:num
         points = vertcat(points, p1 + delta_p * i);
 
     end 
 
 
-    % v? các v?t c?n
+    % v? cï¿½c v?t c?n
    
     for i = 1:size(points, 1)
         p = points(i, :);

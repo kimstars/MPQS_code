@@ -74,31 +74,31 @@ p = [-790 -740 -1, -300 -200 1];
     
 p1 = [-300 0 -1, 200 -200 0];
 p2 = [-410 180 -1, 200 -200 0];
-AddObstacles(p1,p2);
+AddObstacles(p1,p2,10);
 
 p1 = [-410 180 -1, 200 -200 0];
 p2 = [-370 570 -1, 200 -200 0];
-AddObstacles(p1,p2);
+AddObstacles(p1,p2,15);
 
 p1 = [-370 570 -1, 200 -200 0];
 p2 = [360 750 -1, 200 -200 0];
-AddObstacles(p1,p2);
+AddObstacles(p1,p2,20);
 
 p1 = [360 750 -1, 200 -200 0];
 p2 = [840 410 -1, 200 -200 0];
-AddObstacles(p1,p2);
+AddObstacles(p1,p2,20);
 
 p1 = [840 410 -1, 200 -200 0];
 p2 = [800 90 -1, 200 -200 0];
-AddObstacles(p1,p2);
+AddObstacles(p1,p2,10);
 
 p1 = [800 90 -1, 200 -200 0];
 p2 = [350 -20 -1, 200 -200 0];
-AddObstacles(p1,p2);
+AddObstacles(p1,p2,15);
 
 p1 = [350 -20 -1, 200 -200 0];
 p2 = [100 0 -1, 200 -200 0];
-AddObstacles(p1,p2);
+AddObstacles(p1,p2,10);
 
 
 

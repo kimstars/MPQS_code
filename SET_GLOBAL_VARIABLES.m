@@ -49,7 +49,7 @@ function SET_GLOBAL_VARIABLES()
     TargetsNum = 1;
     D_BehindLeader = 15;
 
-    BloodPos = -25;
+    BloodPos = 25;
 
     DameOfBlue = 5;
     DameOfRed = 5;
