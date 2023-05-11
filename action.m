@@ -136,14 +136,14 @@
 
         while (TimeStick2 < 300)
 
-            for ItemBlue = 7:8
+            for ItemBlue = 1:2
                 Blues = updateAtBoundary(Blues, ItemBlue);
                 CurrentBlue = Blues(ItemBlue, :);
                 forceItem = steer_seek(CurrentBlue, nupB1);
                 Blues(ItemBlue, :) = applyForce(CurrentBlue, forceItem);
             end
 
-            for ItemBlue = 9:10
+            for ItemBlue = 3:5
                 Blues = updateAtBoundary(Blues, ItemBlue);
                 CurrentBlue = Blues(ItemBlue, :);
                 forceItem = steer_seek(CurrentBlue, nupB)
