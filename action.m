@@ -503,16 +503,35 @@ while (TimeStick5 < 6)
                 
             end
         end  
-            [NhaNum, Nhas] = UpdateBoid(AttackNha(1:2), 2, Nha);
+            [NhaNum, Nhas] = UpdateBoid(AttackNha(1:2), 2, Nhas);
             [VantaiNum, Vantais] = UpdateBoid(AttackNha(3), 1, Vantais);
             RedrawNha(Nhas, NhaNum, v_ImageDef1, v_AlphaDef1, NhasPlot);
             RedrawNha(Vantais, 1, v_ImageDef2, v_AlphaDef2, VantaisPlot);
-            RedrawNhaHP();
-            RedrawVantaiHP();
+            RedrawNhaHP(Nhas, NhaNum);
+            RedrawVantaiHP(Vantais,VantaiNum);
        
         
-        % xe tang 2 ban b41
-        
+        % xe tang 2 ban 
+        if(Boids(2,15)>0 && dist(Boids(2, :), b41) >=300)
+            [J,tmpDist]=findTarget(Boids(1,:),BluesNum,Blues);
+            AttackBlue = zeros(1, BluesNum);
+            if (J>0 && dist(Boids(2,:),Blues(J,:))<520)
+                
+                
+                    c1=line([Boids(2,1),Blues(J,1)], [Boids(2,2),Blues(J,2)], 'Color', 'red','LineStyle','-.');
+                    pause(0.02);
+                    % x?a duong ??n c?
+                    delete(c1);
+                    if (sqrt(deviationXB * deviationXB + deviationYB * deviationYB) < 500)
+                        AttackBlue(1, J) = AttackBlue(1, J) + DameOfBlue;
+                    end
+            end          
+        end
+        [BluesNum, Blues] = UpdateBoid(AttackBlue, BluesNum, Blues);
+       RedrawBoids(Blues,BluesNum,v_ImageB,v_AlphaB,BluesPlot)
+        RedrawBlueHP()
+       
+    
         if (dist(Boids(2, :), b41) < 300)
             disp("xt2 ban b41..........");
             

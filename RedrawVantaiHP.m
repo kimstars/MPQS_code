@@ -1,6 +1,6 @@
-function RedrawVantaiHP()
+function RedrawVantaiHP(Vantais,VantaiNum)
     global Nhas;
-    global Vantais;
+    %global Vantais;
     global MaxVantaiNum;
     global MaxRedNum;
     global VantaisHP;
@@ -8,7 +8,7 @@ function RedrawVantaiHP()
     global SizeHPBar;
     
     delete(VantaisHP);
-    for i = 1 : MaxVantaiNum           
+    for i = 1 : VantaiNum           
         if (Vantais(i,15)>0)       
             x1=Vantais(i,1)-25;
             x2=Vantais(i,1)-25 + Vantais(i,15)/40 - 2;
