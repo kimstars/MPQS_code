@@ -29,7 +29,7 @@ function RedrawNha(Boids, BoidsNum, v_Image, v_Alpha, BoidsPlot)
             end
 
         else
-            [v_ImageE, v_AlphaE] = LoadImageBase('destroy.png', 60, 60, 0);
+            [v_ImageE, v_AlphaE] = LoadImageBase('destroy.png', 150, 150, 0);
             BoidsPlot(BoidIndex).CData = v_ImageE;
             BoidsPlot(BoidIndex).AlphaData = v_AlphaE;
         end

@@ -14,7 +14,7 @@ function RedrawNhaHP()
             x2=Nhas(i,1)-25 + Nhas(i,15)/40 - 2;
             y1=Nhas(i,2)+BloodPos;
             y2=Nhas(i,2)+BloodPos;                  
-            NhasHP(i)=plot([x1 x2],[y1 y2],'-','Color','r','LineWidth',SizeHPBar);%line([x1 x2],[y1 y2],'Color','red','LineStyle','-');       
+            NhasHP(i)=plot([x1 x2],[y1 y2],'-','Color','b','LineWidth',SizeHPBar);%line([x1 x2],[y1 y2],'Color','blue','LineStyle','-');       
         end
     end
 
