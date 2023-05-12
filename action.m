@@ -111,9 +111,9 @@
                     c5 = line([900, x - 3], [-900, y - 3], 'Color', 'red', 'LineStyle', '-.');
                     BMBPosition = [y - 50, x - 50, 0, 200, 300, 0];
                     [BMBPlot] = InitializeFence(v_ImageBMB0, v_AlphaBMB0, BMBPosition);
-                    % [y, Fs] = audioread('soundbomb.wav');
-                    % sound(y, Fs);
-                    % pause(1);
+                    [y, Fs] = audioread('soundbomb.wav');
+                    sound(y, Fs);
+                    pause(0.5);
                     delete(c1);
                     delete(c2);
                     delete(c3);
@@ -466,26 +466,6 @@
 
                 AttackRed = zeros(1, RedsNum);
 
-                % b41 ban tang
-                if (dist(Boids(1, :), b41) < 300)
-
-                    while (Boids(1, 15) > 0)
-                        disp("b41 ban ..........")
-                        c2 = line([b41(1), Boids(1, 1)], [b41(2), Boids(1, 2)], 'Color', 'blue', 'LineStyle', '-.');
-                        Boids(1, 15) = Boids(1, 15) - 500;
-                        pause(0.5);
-                        % x?a duong ??n c?
-                        delete(c2);
-
-                        if (Boids(1, 15) == 0)
-                            RedrawBoid(Boids, 1, v_ImageXT, v_AlphaXT, v_ImageE, v_AlphaE, BoidsPlot);
-                            RedrawBoidsHP();
-                        end
-
-                    end
-
-                end
-
                 %% daviation Bule //
                 deviationXT = ShootDistanceB * (1 - AccuracyB * (2 * rand - 1));
                 deviationYT = ShootDistanceB * (1 - AccuracyB * (2 * rand - 1));
@@ -503,6 +483,8 @@
                     if (J > 0 && dist(Boids(1, 1:3), Nha(J, 1:3)) < 520)
 
                         c1 = line([Boids(1, 1), Nha(J, 1)], [Boids(1, 2), Nha(J, 2)], 'Color', 'red', 'LineStyle', '-.');
+                        [y, Fs] = audioread('soundbomb.wav');
+                        sound(y, Fs);
                         pause(0.2);
 
                         delete(c1);
@@ -522,6 +504,28 @@
                 RedrawNhaHP(Nhas, NhaNum);
                 RedrawVantaiHP(Vantais, VantaiNum);
 
+                % b41 ban tang
+                if (dist(Boids(1, :), b41) < 300)
+
+                    while (Boids(1, 15) > 0)
+                        disp("b41 ban ..........")
+                        c2 = line([b41(1), Boids(1, 1)], [b41(2), Boids(1, 2)], 'Color', 'blue', 'LineStyle', '-.');
+                        Boids(1, 15) = Boids(1, 15) - 500;
+                        [y, Fs] = audioread('rocket.wav');
+                        sound(y, Fs);
+                        pause(0.5);
+                        % x?a duong ??n c?
+                        delete(c2);
+
+                        if (Boids(1, 15) == 0)
+                            RedrawBoid(Boids, 1, v_ImageXT, v_AlphaXT, v_ImageE, v_AlphaE, BoidsPlot);
+                            RedrawBoidsHP();
+                        end
+
+                    end
+
+                end
+
                 % xe tang 2 ban b41
 
                 if (dist(Boids(2, :), b41) < 300)
@@ -531,7 +535,8 @@
                         disp("kiet ban..........");
                         disp(b41(1, 15));
                         c2 = line([Boids(2, 1), b41(1)], [Boids(2, 2), b41(2)], 'Color', 'red', 'LineStyle', '-.');
-
+                        [y, Fs] = audioread('soundbomb.wav');
+                        sound(y, Fs);
                         pause(0.2);
 
                         delete(c2);
@@ -743,6 +748,7 @@
                             delete(c2);
                             [y, Fs] = audioread('ban1s.wav');
                             sound(y, Fs);
+
                             if (sqrt(deviationXB * deviationXB + deviationYB * deviationYB) < 800)
                                 AttackRed(1, J) = AttackRed(1, J) + DameOfBlue;
                             end
