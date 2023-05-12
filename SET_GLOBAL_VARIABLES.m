@@ -87,7 +87,7 @@ function SET_GLOBAL_VARIABLES()
     Red2s(:, 2) = 150 * (rand([MaxRedNum, 1])) -950; % set random position
     Red2s(:, 4:5) = 200; %200*(2*rand([BoidsNum,2])-1); % set random velocity
     Red2s(:, 10) = 8; %*(rand([BoidsNum,1]) + 0.2); % set maxspeed
-    Red2s(:, 11) = 0.8; % set maxforce
+    Red2s(:, 11) = 0.9; % set maxforce
     Red2s(:, 13) = 200; % set max see ahead
     Red2s(:, 14) = 10; % set max avoid force
     Red2s(:, 15) = 100; % set blood
