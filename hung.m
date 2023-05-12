@@ -461,8 +461,8 @@ function action()
                     disp("b41 ban ..........")
                     c2 = line([b41(1), Boids(1, 1)], [b41(2), Boids(1, 2)], 'Color', 'blue', 'LineStyle', '-.');
                     Boids(1, 15) = Boids(1, 15) - 400;
-                    pause(0.5);
-                    % x?a duong ??n c?
+                    pause(1);
+                 
                     delete(c2);
                     
                     %if (Boids(1, 15) <= 0)

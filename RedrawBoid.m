@@ -19,8 +19,8 @@ for BoidIndex = 1 : BoidsNum
         BoidsPlot(BoidIndex).AlphaData = alpha_i;
 
         try
-            BoidsPlot(BoidIndex).XData = Boids(BoidIndex,1)-ImageWidth/2;
-            BoidsPlot(BoidIndex).YData = Boids(BoidIndex,2)-ImageWidth/2;
+            BoidsPlot(BoidIndex).XData = Boids(BoidIndex,1);
+            BoidsPlot(BoidIndex).YData = Boids(BoidIndex,2);
         catch Me
             disp('hi');
             [Boids(BoidIndex,1),Boids(BoidIndex,2)]
